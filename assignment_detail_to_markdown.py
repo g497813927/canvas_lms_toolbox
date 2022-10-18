@@ -190,11 +190,22 @@ for line in markdown_lines:
 # Prompt the user to ask if they want to save the markdown file
 save_file = input('Do you want to save the markdown file? (y/n): ').lower()
 if save_file == 'y':
-    # Save the markdown file
-    file = open(assignment_name + '.md', 'w')
-    file.write(result)
-    file.close()
-    print('The markdown file is saved.')
+    # Check if the file exists
+    file_save = False  # Flag to check if the user wants to save the file
+    try:
+        with open(assignment_name + '.md', 'r') as f:
+            overwrite_file = input('The file {}.md already exists. Do you want to overwrite the file? (y/n): '
+                                   .format(assignment_name)).lower()
+            if overwrite_file == 'y':
+                file_save = True
+    except FileNotFoundError:
+        file_save = True
+
+    if file_save:
+        file = open(assignment_name + '.md', 'w')
+        file.write(result)
+        file.close()
+        print('The markdown file is saved.')
 
 # Prompt the user to ask if they want to print the markdown
 print_markdown = input('Do you want to print the markdown? (y/n): ').lower()
