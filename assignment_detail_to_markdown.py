@@ -141,6 +141,8 @@ for img in soup.find_all('img'):
     if 'data-equation-content' in img.attrs:
         # Get the equation
         equation = img['data-equation-content']
+        # Remove the new line characters from the equation
+        equation = equation.replace('\n', '')
         img['src'] = 'latex equation'
         del img['title']
         img['alt'] = equation  # put the equation to the alt, make sure it can be replaced
